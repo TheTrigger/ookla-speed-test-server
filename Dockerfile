@@ -10,10 +10,13 @@ RUN wget https://install.speedtest.net/ooklaserver/ooklaserver.sh && chmod a+x o
 RUN ./ooklaserver.sh install -f
 RUN rm ooklaserver.sh
 
+# Disables useLetsEncrypt to use Traefik
+RUN echo 'OoklaServer.ssl.useLetsEncrypt = false' >> OoklaServer.properties
+
 RUN useradd --create-home --shell /bin/bash guest
 USER guest
 
-EXPOSE 8080
+EXPOSE 8080 5060
 
 ARG DEBIAN_FRONTEND=noninteractive
 
